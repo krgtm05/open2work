@@ -1,19 +1,20 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const JWT_SECRET = "whocares";
+const { UserModel } = require("./DB/db");
 
-function auth(req, res, next) {
-    const token = req.headers.token;
-    const decodedData = jwt.verify(token, JWT_SECRET);
-    if (decodedData) {
-        req.userId = decodedData.id;
-        next();
-    }
-    else{
-        res.status(401).json({ message: "Unauthorized" });
-    }
+async function auth(req, res, next) {
+  const token = req.headers.token;
+  const decodedData = jwt.verify(token, JWT_SECRET);
+  const user = await UserModel.findById(decodedData.id);
+
+  if (!user) {
+    return res.status(401).json({ message: "User not found" });
+  }
+  req.user = user; // Attach the full user object here
+  next();
 }
 module.exports = {
-    auth,
-    JWT_SECRET,
-    jwt
-}
+  auth,
+  JWT_SECRET,
+  jwt,
+};
