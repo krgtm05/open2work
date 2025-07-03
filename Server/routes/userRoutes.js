@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { UserModel, JobModel, ObjectId } = require("../DB/db");
 const { auth, JWT_SECRET, jwt } = require("../authMiddleware");
-const { onlyEmployer } = require("../onlyEmployer");
+const { onlyEmployer } = require("../middlewares/onlyEmployer");
 
 router.post("/signup", async function (req, res) {
   const email = req.body.email;
