@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "whocares";
-const { UserModel } = require("./DB/db");
+const { UserModel } = require("../DB/db");
 
 async function auth(req, res, next) {
   const token = req.headers.token;
