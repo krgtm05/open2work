@@ -13,7 +13,18 @@ export default function RoleSelection() {
   };
 
   return (
-    <div className='bg-dots container h-screen flex flex-col justify-center items-center text-white bg-red-200.'>
+    <div className='bg-dots container h-screen flex flex-col justify-center items-center text-white'>
+      <a
+        href='/'
+        className='flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white'
+      >
+        <img
+          className='w-8 h-8 mr-2'
+          src='https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'
+          alt='logo'
+        />
+        Open2Work
+      </a>
       <div className='w-[80%]'>
         <h3 className='bg-yellow-400 flex justify-around items-center text-black  p-5 rounded-full w-[20%] mb-2'>
           Sign Up as{" "}
@@ -36,7 +47,7 @@ export default function RoleSelection() {
       <div className='grid grid-cols-2 gap-4 w-[80%]'>
         <button
           onClick={() => handleRoleSelect("employer")}
-          className='flex flex-col justify-center items-start bg-gray-900/60 border border-gray-600  col-span-1  rounded p-5 hover:bg-gray-900/90'
+          className='flex flex-col justify-center items-start bg-gray-900/60 border border-gray-600  col-span-1  rounded-lg p-5 hover:bg-gray-900/90'
         >
           <div>
             <svg
@@ -74,7 +85,7 @@ export default function RoleSelection() {
         </button>
         <button
           onClick={() => handleRoleSelect("candidate")}
-          className='flex flex-col justify-center items-start bg-gray-900/60 border border-gray-600  col-span-1  rounded p-5 h-[20rem] hover:bg-gray-900'
+          className='flex flex-col justify-center items-start bg-gray-900/60 border border-gray-600  col-span-1  rounded-lg p-5 h-[20rem] hover:bg-gray-900'
         >
           <div>
             <svg
@@ -113,9 +124,9 @@ export default function RoleSelection() {
         <p className='col-span-2 flex justify-center items-center'>Or</p>
         <button
           onClick={() => handleLogin()}
-          className='bg-green-900 col-span-2 h-[5rem] rounded'
+          className='bg-primary-600 hover:bg-primary-700 col-span-2 h-[3rem] rounded-lg'
         >
-          Already has an account? <br /> Login
+          Already has an account? Login
         </button>
       </div>
     </div>
