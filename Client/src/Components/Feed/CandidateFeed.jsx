@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import JobCard from "../JobCard";
+import Navbar from "../../Components/Navbar";
 
 function CandidateFeed() {
   const [alljobs, setAlljobs] = useState([]);
@@ -26,13 +27,14 @@ function CandidateFeed() {
 
   return (
     <>
-      <div className='container bg-dots'>
+      <Navbar />
+      <div className='pt-20 container'>
         <button
           data-drawer-target='logo-sidebar'
           data-drawer-toggle='logo-sidebar'
           aria-controls='logo-sidebar'
           type='button'
-          class='inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+          class='inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:border-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
         >
           <span class='sr-only'>Open sidebar</span>
           <svg
@@ -51,10 +53,10 @@ function CandidateFeed() {
         </button>
         <aside
           id='logo-sidebar'
-          class='fixed z-40 w-64 h-[70%] top-[1rem] transition-transform -translate-x-full sm:translate-x-0'
+          class='fixed z-40 w-64 h-[75%] transition-transform -translate-x-full sm:translate-x-0'
           aria-label='Sidebar'
         >
-          <div class='h-full px-3 py-4 rounded overflow-y-auto bg-gray-50 dark:bg-gray-800'>
+          <div class='h-full px-3 py-4 rounded overflow-y-auto bg-gray-900/60 border-2 border-gray-900'>
             <a
               href='https://flowbite.com/'
               class='flex items-center ps-2.5 mb-5'
@@ -166,14 +168,10 @@ function CandidateFeed() {
           </div>
         </aside>
 
-        <div class='p-4 sm:ml-64'>
-          <div class='p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700'>
-            <div class='grid grid-cols-2 gap-4 mb-4'>
-              {alljobs.map((job) => {
-                return <JobCard job={job} />;
-              })}
-            </div>
-          </div>
+        <div className='sm:ml-64 px-4 grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-scroll h-[calc(100vh-10px)] will-change-scroll pb-40 scrollbar-hide'>
+          {alljobs.map((job) => (
+            <JobCard key={job._id} job={job} />
+          ))}
         </div>
       </div>
     </>

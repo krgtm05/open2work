@@ -1,3 +1,5 @@
+import scrollbarHide from "tailwind-scrollbar-hide";
+
 export default {
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
@@ -21,6 +23,7 @@ export default {
       container: {
         center: true,
         padding: "1rem",
+        overflow: "hidden",
         screens: {
           sm: "600px",
           md: "728px",
@@ -31,5 +34,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [scrollbarHide],
 };
