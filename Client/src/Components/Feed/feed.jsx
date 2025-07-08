@@ -6,5 +6,5 @@ export default function Feed() {
 
   if (role === "candidate") return <CandidateFeed />;
   if (role === "employer") return <EmployerFeed />;
-  return <div>Unauthorized. Please login again.</div>;
+  return <div>Unauthorized. Please login again. Error from Feed Comp</div>;
 }
