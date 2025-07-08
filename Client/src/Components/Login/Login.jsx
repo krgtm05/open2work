@@ -16,14 +16,14 @@ export default function Login() {
       });
       localStorage.setItem("token", res.data.token);
       const profileRes = await axios.get("/api/me", {
-          headers: {
+        headers: {
           token: localStorage.getItem("token"),
         },
       });
 
       // Store role and any other user info
       console.log("Profile Response:", profileRes.data);
-      localStorage.setItem("role", profileRes.data.role);
+      localStorage.setItem("role", profileRes.data.profile.role);
       navigate("/feed");
     } catch {
       alert("User Not Found or Invalid Credentials");

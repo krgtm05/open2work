@@ -8,7 +8,7 @@ import RoleSelection from "./Components/RoleSelection/RoleSelection";
 import SignUp from "./Components/Signup/SignUp";
 import Login from "./Components/Login/Login";
 import Feed from "./Components/Feed/feed";
-import ProtectedSignupRoute from "./Components/ProtectedSignupRoute";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
   return (
@@ -19,13 +19,20 @@ function App() {
           <Route
             path='/signup'
             element={
-              <ProtectedSignupRoute>
+              <ProtectedRoute>
                 <SignUp />
-              </ProtectedSignupRoute>
+              </ProtectedRoute>
             }
           />
           <Route path='/login' element={<Login />} />
-          <Route path='/feed' element={<Feed />} />
+          <Route
+            path='/feed'
+            element={
+              <ProtectedRoute>
+                <Feed />
+              </ProtectedRoute>
+            }
+          />
           <Route path='*' element={<Navigate to='/' />} />
         </Routes>
       </Router>

@@ -11,11 +11,13 @@ const { onlyEmployer } = require("../middlewares/onlyEmployer");
 const { onlyCandidate } = require("../middlewares/onlyCandidate");
 
 router.post("/signup", async function (req, res) {
+  const fullName = req.body.fullName;
   const email = req.body.email;
   const password = req.body.password;
   const role = req.body.role;
 
   await UserModel.create({
+    fullName: fullName,
     email: email,
     password: password,
     role: role,
@@ -52,8 +54,8 @@ router.get("/me", auth, async function (req, res) {
     return res.status(404).json({ message: "User not found" });
   }
   res.json({
-    email: profile.email,
-    role: profile.role,
+    message: "User details fetched successfully ",
+    profile: profile,
   });
 });
 
@@ -161,4 +163,15 @@ router.get("/alljobs", auth, async function (req, res) {
 
   return res.status(200).json({ alljobs });
 });
+
+router.get("/allusers", auth, async (req, res) => {
+  try {
+    const allusers = await UserModel.find({}, "-password -__v"); // exclude sensitive fields
+    return res.status(200).json({ allusers });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return res.status(500).json({ message: "Failed to fetch users" });
+  }
+});
+
 module.exports = router;

@@ -2,18 +2,18 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import JobCard from "../JobCard";
+import UserCard from "../UserCard";
 import Navbar from "../../Components/Navbar";
 import Spinner from "../../Components/Spinner";
-import { useNavigate, Link } from "react-router-dom";
 import AboutComp from "../AboutComp";
 
 function CandidateFeed() {
   const [alljobs, setAlljobs] = useState([]);
+  const [allusers, setAllusers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-const [JobsAssideStatus, setJobAssideStatus] = useState(true);
-const [UsersAssideStatus, setUsersAssideStatus ] = useState(true);
-const [about, setAbout ] = useState(true);
-
+  const [JobsAsideStatus, setJobAsideStatus] = useState(true);
+  const [UsersAsideStatus, setUsersAsideStatus] = useState(true);
+  const [about, setAbout] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -30,21 +30,28 @@ const [about, setAbout ] = useState(true);
         console.error("Failed to fetch jobs:", e);
       }
     }
-    setUsersAssideStatus(false);
+    setUsersAsideStatus(false);
     setAbout(false);
     fetchJobs();
   }, []);
 
-  function fetchUsers() {
-    setJobAssideStatus(false);
+  async function fetchUsers() {
+    setJobAsideStatus(false);
     setAbout(false);
-    setUsersAssideStatus(true);
-    console.log("Fetching users...");
+    setUsersAsideStatus(true);
+
+    const res = await axios.get("/api/allusers", {
+      headers: {
+        token: localStorage.getItem("token"),
+      },
+    });
+
+    setAllusers(res.data.allusers);
   }
 
   function fetchAbout() {
-    setJobAssideStatus(false);
-    setUsersAssideStatus(false);
+    setJobAsideStatus(false);
+    setUsersAsideStatus(false);
     setAbout(true);
     console.log("Fetching About...");
   }
@@ -81,10 +88,7 @@ const [about, setAbout ] = useState(true);
           aria-label='Sidebar'
         >
           <div className='h-full px-3 py-4 rounded overflow-y-auto bg-gray-900/60 border-2 border-gray-900'>
-            <a
-              href='https://flowbite.com/'
-              className='flex items-center ps-2.5 mb-5'
-            >
+            <div className='flex items-center ps-2.5 mb-5'>
               <img
                 src='https://flowbite.com/docs/images/logo.svg'
                 className='h-6 me-3 sm:h-7'
@@ -93,18 +97,16 @@ const [about, setAbout ] = useState(true);
               <span className='self-center text-xl font-semibold whitespace-nowrap dark:text-white'>
                 Open2Work
               </span>
-            </a>
+            </div>
             <ul className='space-y-2 font-medium'>
-              <li onClick={() => {
-                setJobAssideStatus(true);
-                setUsersAssideStatus(false);
-                setAbout(false);
-              }
-              }>
-                <a
-                  href='#'
-                  className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
-                >
+              <li
+                onClick={() => {
+                  setJobAsideStatus(true);
+                  setUsersAsideStatus(false);
+                  setAbout(false);
+                }}
+              >
+                <div className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                   <svg
                     className='w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white'
                     aria-hidden='true'
@@ -116,13 +118,10 @@ const [about, setAbout ] = useState(true);
                     <path d='M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z' />
                   </svg>
                   <span className='ms-3'>Dashboard</span>
-                </a>
+                </div>
               </li>
-              <li onClick={fetchUsers} >
-                <a
-                  href='#'
-                  className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
-                >
+              <li onClick={fetchUsers}>
+                <div className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                   <svg
                     className='shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white'
                     aria-hidden='true'
@@ -133,13 +132,11 @@ const [about, setAbout ] = useState(true);
                     <path d='M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z' />
                   </svg>
                   <span className='flex-1 ms-3 whitespace-nowrap'>Users</span>
-                </a>
+                </div>
               </li>
-              
+
               <li onClick={fetchAbout}>
-                <a
-                  className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'
-                >
+                <div className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                   <svg
                     className='shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white'
                     aria-hidden='true'
@@ -152,7 +149,7 @@ const [about, setAbout ] = useState(true);
                     <path d='M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z' />
                   </svg>
                   <span className='flex-1 ms-3 whitespace-nowrap'>About</span>
-                </a>
+                </div>
               </li>
             </ul>
           </div>
@@ -160,11 +157,11 @@ const [about, setAbout ] = useState(true);
 
         <div className='sm:ml-64 px-4 grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-scroll h-[calc(100vh-10px)] will-change-scroll pb-40 scrollbar-hide'>
           {isLoading && <Spinner />}
-          {JobsAssideStatus && alljobs.map((job) => (
-            <JobCard key={job._id} job={job} />
-          ))}
-          {UsersAssideStatus && "All users data will be displayed here."}
-          {about && <AboutComp/>}
+          {JobsAsideStatus &&
+            alljobs.map((job) => <JobCard key={job._id} job={job} />)}
+          {UsersAsideStatus &&
+            allusers.map((user) => <UserCard key={user._id} user={user} />)}
+          {about && <AboutComp />}
         </div>
       </div>
     </>

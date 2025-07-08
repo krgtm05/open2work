@@ -7,6 +7,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [fullName, setFullName] = useState("");
 
   const navigate = useNavigate();
 
@@ -20,6 +21,7 @@ export default function SignUp() {
     }
     try {
       const res = await axios.post("/api/signup", {
+        fullName: fullName,
         email: email,
         password: password,
         role: localStorage.getItem("role"),
@@ -50,6 +52,24 @@ export default function SignUp() {
             <h1 className='text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white'>
               Create an account
             </h1>
+            <div>
+              <label
+                htmlFor='fullName'
+                className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+              >
+                Full Name
+              </label>
+              <input
+                type='text'
+                name='fullName'
+                id='fullName'
+                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                placeholder='Jon Doe'
+                required
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+              />
+            </div>
             <div>
               <label
                 htmlFor='email'
