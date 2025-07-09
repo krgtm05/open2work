@@ -1,6 +1,10 @@
 import React from "react";
 
 function JobCard({ job }) {
+
+  function handleApplyJob(){
+    
+  }
   return (
     <div className='flex items-center justify-center'>
       <div className='min-w-full p-6 bg-gray-900/60 border-2 border-gray-900 rounded-lg shadow-sm hover:border-primary-300/30'>
@@ -23,8 +27,8 @@ function JobCard({ job }) {
           Company: {job.employerId?.companyName}
         </p>
 
-        <a
-          href='#'
+        <button
+          onClick={handleApplyJob}
           className='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-700 '
         >
           Apply Now
@@ -43,7 +47,7 @@ function JobCard({ job }) {
               d='M1 5h12m0 0L9 1m4 4L9 9'
             />
           </svg>
-        </a>
+        </button>
       </div>
     </div>
   );

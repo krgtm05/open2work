@@ -5,6 +5,8 @@ const {
   JobModel,
   EmployerProfileModel,
   CandidateProfileModel,
+  ApplicationSchemaModel,
+  ObjectId,
 } = require("../DB/db");
 const { auth, JWT_SECRET, jwt } = require("../middlewares/authMiddleware");
 const { onlyEmployer } = require("../middlewares/onlyEmployer");
@@ -171,6 +173,22 @@ router.get("/allusers", auth, async (req, res) => {
   } catch (error) {
     console.error("Error fetching users:", error);
     return res.status(500).json({ message: "Failed to fetch users" });
+  }
+});
+
+router.post("/apply-job",auth, onlyCandidate, async function (req, res) {
+  const { jobId, resumeLink, message } = req.body;
+  try {
+    await ApplicationSchemaModel.create({ 
+    jobId: jobId,
+    userId: req.user._id,
+    resumeLink: resumeLink,
+    message: message,
+   });
+    return res.status(200).json({ message: "Application submitted successfully" });
+  }catch(e){
+    console.log(e);
+    return res.status(500).json({ error: "error submitting application " });
   }
 });
 
