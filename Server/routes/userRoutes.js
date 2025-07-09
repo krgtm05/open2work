@@ -6,7 +6,6 @@ const {
   EmployerProfileModel,
   CandidateProfileModel,
   ApplicationSchemaModel,
-  ObjectId,
 } = require("../DB/db");
 const { auth, JWT_SECRET, jwt } = require("../middlewares/authMiddleware");
 const { onlyEmployer } = require("../middlewares/onlyEmployer");
@@ -176,20 +175,68 @@ router.get("/allusers", auth, async (req, res) => {
   }
 });
 
-router.post("/apply-job",auth, onlyCandidate, async function (req, res) {
+router.post("/apply-job", auth, onlyCandidate, async function (req, res) {
   const { jobId, resumeLink, message } = req.body;
   try {
-    await ApplicationSchemaModel.create({ 
-    jobId: jobId,
-    userId: req.user._id,
-    resumeLink: resumeLink,
-    message: message,
-   });
-    return res.status(200).json({ message: "Application submitted successfully" });
-  }catch(e){
+    await ApplicationSchemaModel.create({
+      jobId: jobId,
+      userId: req.user._id,
+      resumeLink: resumeLink,
+      message: message,
+    });
+    return res
+      .status(200)
+      .json({ message: "Application submitted successfully" });
+  } catch (e) {
     console.log(e);
     return res.status(500).json({ error: "error submitting application " });
   }
 });
+
+router.get("/my-applications", auth, onlyCandidate, async function (req, res) {
+  try {
+    const appliedJobs = await ApplicationSchemaModel.find(
+      { userId: req.user._id },
+      "jobId"
+    ).populate({
+      path: "jobId",
+      select: "title salary experience description employerId",
+      populate: {
+        path: "employerId",
+        select: "companyName", // include other fields if needed
+      },
+    });
+    return res.status(200).json({ appliedJobs });
+  } catch (e) {
+    return res
+      .status(500)
+      .json({ error: "error fetching applied applications details" });
+  }
+});
+
+router.delete(
+  "/withdraw-application",
+  auth,
+  onlyCandidate,
+  async function (req, res) {
+    try {
+      const applicationId = req.body.applicationId;
+      const deletedApplication = await ApplicationSchemaModel.deleteOne({
+        jobId: applicationId,
+      });
+      if (deletedApplication.deletedCount === 0) {
+        return res.status(200).json({
+          message: "cannot find application with this id",
+        });
+      } else {
+        return res.status(200).json({
+          message: "application deleted successfully",
+        });
+      }
+    } catch (e) {
+      return res.status(500).json({ error: "Error deleting the application" });
+    }
+  }
+);
 
 module.exports = router;
