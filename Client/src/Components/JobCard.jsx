@@ -1,26 +1,43 @@
-import React from "react";
 import axios from "axios";
-function JobCard({ job }) {
-
-  async function handleApplyJob(){
-    try{
-      const res = await axios.post("/api/apply-job", {
-      jobId: job._id,
-      resumeLink: "https://example.com/resume.pdf", // Replace with actual resume link
-      message: "I am interested in this job." // Replace with actual message
-    }, {
-      headers: {  
-        token: localStorage.getItem("token")
-      }
-    }
-  )
-  console.log("Job Application Response:", res.data)
-    }catch(e){
+function JobCard({ job, tab, onDelete }) {
+  async function handleApplyJob() {
+    try {
+      const res = await axios.post(
+        "/api/apply-job",
+        {
+          jobId: job._id,
+          resumeLink: "https://example.com/resume.pdf", // Replace with actual resume link
+          message: "I am interested in this job.", // Replace with actual message
+        },
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(res.data);
+    } catch (e) {
       console.error("Error applying for job:", e);
-      return;
     }
-    
   }
+
+  async function handleWithdrawApplication() {
+    try {
+      const res = await axios.delete("/api/withdraw-application", {
+        data: {
+          applicationId: job._id,
+        },
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      });
+      onDelete();
+      console.log(res.data);
+    } catch (e) {
+      console.error("Error withdrawing application  :", e);
+    }
+  }
+
   return (
     <div className='flex items-center justify-center'>
       <div className='min-w-full p-6 bg-gray-900/60 border-2 border-gray-900 rounded-lg shadow-sm hover:border-primary-300/30'>
@@ -44,10 +61,14 @@ function JobCard({ job }) {
         </p>
 
         <button
-          onClick={handleApplyJob}
-          className='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-700 '
+          onClick={tab === "Jobs" ? handleApplyJob : handleWithdrawApplication}
+          className={`inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white ${
+            tab === "Jobs"
+              ? "bg-primary-600 rounded-lg hover:bg-primary-700"
+              : "bg-red-600 rounded-lg hover:bg-red-700"
+          } `}
         >
-          Apply Now
+          {tab === "Jobs" ? "Apply Now" : "Withdraw Application"}
           <svg
             className='rtl:rotate-180 w-3.5 h-3.5 ms-2'
             aria-hidden='true'
