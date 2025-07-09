@@ -1,8 +1,24 @@
 import React from "react";
-
+import axios from "axios";
 function JobCard({ job }) {
 
-  function handleApplyJob(){
+  async function handleApplyJob(){
+    try{
+      const res = await axios.post("/api/apply-job", {
+      jobId: job._id,
+      resumeLink: "https://example.com/resume.pdf", // Replace with actual resume link
+      message: "I am interested in this job." // Replace with actual message
+    }, {
+      headers: {  
+        token: localStorage.getItem("token")
+      }
+    }
+  )
+  console.log("Job Application Response:", res.data)
+    }catch(e){
+      console.error("Error applying for job:", e);
+      return;
+    }
     
   }
   return (
