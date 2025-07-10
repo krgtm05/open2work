@@ -14,7 +14,7 @@ function UserList() {
         token: localStorage.getItem("token"),
       },
     });
-    setIsLoading(!isLoading);
+    setIsLoading(false);
     setAllUsers(res.data.allusers);
   }
   fetchUsers();

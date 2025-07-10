@@ -23,7 +23,7 @@ export default function Sidebar() {
             />
           </svg>
 
-          <span className='ms-3'>Dashboard</span>
+          <span className='ms-3'>Profile Overview</span>
         </NavLink>
         <NavLink
           to='/feed/all'

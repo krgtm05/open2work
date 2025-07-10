@@ -7,7 +7,6 @@ import {
 import RoleSelection from "./Components/RoleSelection/RoleSelection";
 import SignUp from "./Components/Signup/SignUp";
 import Login from "./Components/Login/Login";
-import Feed from "./Components/Feed/feed";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import DashboardLayout from "./Components/DashboardLayout";
 import CandidateFeed from "./Components/Feed/CandidateFeed";
