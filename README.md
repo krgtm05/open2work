@@ -11,3 +11,13 @@
 3. Backend validates credentials, creates JWT, sends it back in response JSON
 4. Frontend **receives JWT**, then stores it in `localStorage` (or wherever you want)
 5. Frontend uses that stored JWT in **Authorization headers** for all future protected API calls
+
+
+<Route path="/feed" element={<DashboardLayout />}>
+        └── Sidebar       <-- on all /feed routes
+        └── <Outlet />    <-- renders nested routes:
+              └── index            → CandidateFeed or EmployerFeed
+              └── /all             → AllJobs
+              └── /applications    → MyApplications or ReceivedApplications
+              └── etc...
+
