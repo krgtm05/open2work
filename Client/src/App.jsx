@@ -61,6 +61,8 @@ function App() {
                 <Route path='create-job' element={<CreateJob />} />
                 <Route path='posted-jobs' element={<PostedJobs />} />
                 <Route path='applications' element={<ReceivedApplications />} />
+                <Route path='users' element={<UserList />} />
+                <Route path='about' element={<AboutPage />} />
               </>
             )}
           </Route>
