@@ -32,10 +32,10 @@ function Nav() {
   }
 
   return (
-    <div className='w-full fixed top-0 z-50'>
-      <nav className='bg-slate-950/80 border-2 border-gray-900/60'>
-        <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
-          <div className='flex items-center space-x-3 rtl:space-x-reverse'>
+    <div className='top-0 z-50'>
+      <nav className='bg-gray-900/60 border-2 border-gray-900/60 rounded-lg'>
+        <div className='flex flex-wrap items-center justify-between p-4'>
+          <div className='flex items-center'>
             <img
               src='https://flowbite.com/docs/images/logo.svg'
               className='h-8'
@@ -45,7 +45,7 @@ function Nav() {
               Open2Work
             </span>
           </div>
-          <div className='flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse mx'>
+          <div className='flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse'>
             <button
               onClick={handleUserIcon}
               type='button'

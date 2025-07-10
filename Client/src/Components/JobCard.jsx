@@ -6,8 +6,8 @@ function JobCard({ job, tab, onDelete }) {
         "/api/apply-job",
         {
           jobId: job._id,
-          resumeLink: "https://example.com/resume.pdf", // Replace with actual resume link
-          message: "I am interested in this job.", // Replace with actual message
+          resumeLink: "https://example.com/resume.pdf",
+          message: "I am interested in this job.",
         },
         {
           headers: {
@@ -16,6 +16,7 @@ function JobCard({ job, tab, onDelete }) {
         }
       );
       console.log(res.data);
+      alert("Application submitted successfully!");
     } catch (e) {
       console.error("Error applying for job:", e);
     }
@@ -33,19 +34,19 @@ function JobCard({ job, tab, onDelete }) {
       });
       onDelete();
       console.log(res.data);
+      alert("Application withdrawn successfully!");
     } catch (e) {
       console.error("Error withdrawing application  :", e);
     }
   }
 
   return (
-    <div className='flex items-center justify-center'>
-      <div className='min-w-full p-6 bg-gray-900/60 border-2 border-gray-900 rounded-lg shadow-sm hover:border-primary-300/30'>
-        <a href='#'>
+      <div className=' p-6 bg-gray-900/60 border-2 border-gray-900 rounded-lg shadow-sm hover:border-primary-300/30'>
+        
           <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
             {job.title}
           </h5>
-        </a>
+        
         <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>
           Salary: {job.salary}
         </p>
@@ -86,7 +87,6 @@ function JobCard({ job, tab, onDelete }) {
           </svg>
         </button>
       </div>
-    </div>
   );
 }
 
