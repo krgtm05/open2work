@@ -17,15 +17,17 @@ router.post("/signup", async function (req, res) {
   const password = req.body.password;
   const role = req.body.role;
 
-  await UserModel.create({
+  const user = await UserModel.create({
     fullName: fullName,
     email: email,
     password: password,
     role: role,
   });
+  const token = jwt.sign({ id: user._id }, JWT_SECRET);
 
   res.status(200).json({
     message: "you are signed up successfully",
+    token: token,
   });
 });
 

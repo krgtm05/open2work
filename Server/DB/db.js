@@ -44,7 +44,7 @@ const Employer = new Schema({
 
 const Candidate = new Schema({
   userId: ObjectId,
-  fullName: String,
+  organizationName: String,
   experience: String,
   skills: [String],
   location: String,

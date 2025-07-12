@@ -18,6 +18,8 @@ import PostedJobs from "./Components/FeedTabs/PostedJobs";
 import ReceivedApplications from "./Components/FeedTabs/ReceivedApplications";
 import MyApplications from "./Components/FeedTabs/MyApplications";
 import AllJobs from "./Components/FeedTabs/AllJobs";
+import Profile from "./Components/Profile";
+
 
 const role = localStorage.getItem("role");
 
@@ -35,8 +37,15 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path='/complete-profile'
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
           <Route path='/login' element={<Login />} />
-
           <Route
             path='/feed'
             element={

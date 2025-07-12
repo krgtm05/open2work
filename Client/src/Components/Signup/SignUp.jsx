@@ -27,8 +27,9 @@ export default function SignUp() {
         role: localStorage.getItem("role"),
       });
       console.log(res.data);
-      // On success, navigate to login page
-      navigate("/login");
+      localStorage.setItem("token", res.data.token);
+      // On success, navigate to complete-profile page
+      navigate("/complete-profile");
     } catch (error) {
       console.error("Signup failed", error);
     }
