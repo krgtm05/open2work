@@ -20,8 +20,7 @@ function Nav() {
           token: localStorage.getItem("token"),
         },
       });
-      setProfile(res.data.profile);
-      console.log(res.data);
+      setProfile(res.data.profile.userId);
     } catch (err) {
       console.log(err);
     }
@@ -80,10 +79,10 @@ function Nav() {
             >
               <div className='px-4 py-3'>
                 <span className='block text-sm text-gray-900 dark:text-white'>
-                  {profile.fullName}
+                  {profile.fullName ? profile.fullName : "Full Name"}
                 </span>
                 <span className='block text-sm  text-gray-500 truncate dark:text-gray-400'>
-                  {profile.email}
+                  {profile.email ? profile.email : "example@gmail.com"}
                 </span>
               </div>
               <ul className='py-2'>

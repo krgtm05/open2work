@@ -23,7 +23,8 @@ export default function Login() {
 
       // Store role and any other user info
       console.log("Profile Response:", profileRes.data);
-      localStorage.setItem("role", profileRes.data.profile.role);
+      console.log(profileRes.data.profile.userId.role);
+      localStorage.setItem("role", profileRes.data.profile.userId.role);
       navigate("/feed");
     } catch {
       alert("User Not Found or Invalid Credentials");

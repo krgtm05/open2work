@@ -51,15 +51,40 @@ router.post("/login", async function (req, res) {
 });
 
 router.get("/me", auth, async function (req, res) {
-  const userId = req.user._id;
-  const profile = await UserModel.findOne({ _id: userId });
-  if (!profile) {
-    return res.status(404).json({ message: "User not found" });
+  try {
+    const user = req.user;
+
+    if (user.role === "candidate") {
+      const profile = await CandidateProfileModel.findOne({
+        userId: user._id,
+      }).populate({
+        path: "userId",
+        select: "email fullName role",
+      });
+
+      return res.json({
+        message: "Candidate profile fetched successfully",
+        profile,
+      });
+    }
+
+    if (user.role === "employer") {
+      const profile = await EmployerProfileModel.findOne({
+        userId: user._id,
+      }).populate({
+        path: "userId",
+        select: "email fullName role",
+      });
+
+      return res.json({
+        message: "Employer profile fetched successfully",
+        profile,
+      });
+    }
+  } catch (error) {
+    console.error("Error in /me:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
-  res.json({
-    message: "User details fetched successfully ",
-    profile: profile,
-  });
 });
 
 router.post("/createjob", auth, onlyEmployer, async function (req, res) {
@@ -88,8 +113,12 @@ router.post("/createjob", auth, onlyEmployer, async function (req, res) {
 });
 
 router.get("/my-listed-jobs", auth, onlyEmployer, async function (req, res) {
-  const employerId = req.user._id;
-  const jobs = await JobModel.find({ employerId: employerId });
+  const emp = await EmployerProfileModel.findOne({ userId: req.user._id });
+  const employerId = emp._id;
+  const jobs = await JobModel.find({ employerId }).populate({
+    path: "employerId",
+    select: "companyName",
+  });
   if (jobs) {
     return res.status(200).json({
       jobs: jobs,

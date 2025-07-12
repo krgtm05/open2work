@@ -43,7 +43,7 @@ const Employer = new Schema({
 });
 
 const Candidate = new Schema({
-  userId: ObjectId,
+  userId: { type: ObjectId, ref: "User" },
   organizationName: String,
   experience: String,
   skills: [String],
@@ -74,5 +74,5 @@ module.exports = {
   ObjectId: ObjectId,
   EmployerProfileModel: EmployerProfileModel,
   CandidateProfileModel: CandidateProfileModel,
-  ApplicationSchemaModel: ApplicationSchemaModel
+  ApplicationSchemaModel: ApplicationSchemaModel,
 };
