@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../axios.js";
 import { useState, useEffect } from "react";
 import JobCard from "../../Components/JobCard";
 import Spinner from "../../Components/Spinner";

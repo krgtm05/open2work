@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import axios from "../../axios.js";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function Login({ setRole }) {
@@ -25,9 +25,10 @@ export default function Login({ setRole }) {
       localStorage.setItem("role", profileRes.data.profile.userId.role);
       setRole(profileRes.data.profile.userId.role);
       navigate("/feed");
-    } catch {
+    } catch(error) {
       alert("User Not Found or Invalid Credentials");
-      //   console.error("Login failed", error);
+      
+        console.error("Login failed", error);
     }
   }
   return (
@@ -37,7 +38,6 @@ export default function Login({ setRole }) {
           href='#'
           className='flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white'
         >
-          
           Open2Work
         </a>
         <div className='w-full bg-gray-900/60 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 '>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../../axios.js";
 import Spinner from "../../Components/Spinner";
 
 function ReceivedApplications() {

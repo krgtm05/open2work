@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../axios.js";
 function JobCard({ job, tab, onDelete }) {
   async function handleApplyJob() {
     try {

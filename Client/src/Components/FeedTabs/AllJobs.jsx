@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import axios from "../../axios.js";
 import Spinner from "../Spinner";
 import JobCard from "../JobCard";
 import { useEffect } from "react";
