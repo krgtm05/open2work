@@ -35,11 +35,7 @@ function Nav() {
       <nav className='bg-gray-900/60 border-2 border-gray-900/60 rounded-lg'>
         <div className='flex flex-wrap items-center justify-between p-4'>
           <div className='flex items-center'>
-            <img
-              src='https://flowbite.com/docs/images/logo.svg'
-              className='h-8'
-              alt='Logo'
-            />
+            
             <span className='self-center text-2xl font-semibold whitespace-nowrap dark:text-white'>
               Open2Work
             </span>

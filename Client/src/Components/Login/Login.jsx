@@ -37,11 +37,7 @@ export default function Login({ setRole }) {
           href='#'
           className='flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white'
         >
-          <img
-            className='w-8 h-8 mr-2'
-            src='https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg'
-            alt='logo'
-          />
+          
           Open2Work
         </a>
         <div className='w-full bg-gray-900/60 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 '>
