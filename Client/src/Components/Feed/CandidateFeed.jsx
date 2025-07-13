@@ -7,49 +7,69 @@ function CandidateFeed() {
   const [isLoading, setIsLoading] = useState(true);
   const [applicationCount, setApplicationCount] = useState(0);
 
+  // useEffect(() => {
+  //   async function fetchCandidateProfile() {
+  //     try {
+  //       const res = await axios.get("/api/me", {
+  //         headers: {
+  //           token: localStorage.getItem("token"),
+  //         },
+  //       });
+  //       setProfile(res.data.profile);
+  //       setIsLoading(false);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  //   fetchCandidateProfile();
+  // }, []);
+
+  // async function fetchMyApplications() {
+  //   try {
+  //     const res = await axios.get("/api/my-applications", {
+  //       headers: {
+  //         token: localStorage.getItem("token"),
+  //       },
+  //     });
+  //     setIsLoading(false);
+  //     setApplicationCount(res.data.appliedJobs.length);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
+  // fetchMyApplications();
+  
   useEffect(() => {
-    async function fetchCandidateProfile() {
+    async function fetchAllData() {
       try {
-        const res = await axios.get("/api/me", {
-          headers: {
-            token: localStorage.getItem("token"),
-          },
-        });
-        setProfile(res.data.profile);
+        const token = localStorage.getItem("token");
+
+        const [profileRes, appRes] = await Promise.all([
+          axios.get("/api/me", { headers: { token } }),
+          axios.get("/api/my-applications", { headers: { token } }),
+        ]);
+
+        setProfile(profileRes.data.profile);
+        setApplicationCount(appRes.data.appliedJobs.length);
         setIsLoading(false);
       } catch (err) {
-        console.log(err);
+        console.error("Error fetching dashboard data:", err);
+        setIsLoading(false);
       }
     }
-    fetchCandidateProfile();
+
+    fetchAllData();
   }, []);
-
-  async function fetchMyApplications() {
-    try {
-      const res = await axios.get("/api/my-applications", {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
-      });
-      setIsLoading(false);
-      setApplicationCount(res.data.appliedJobs.length);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  fetchMyApplications();
-
   return (
     <div className='border-2 border-gray-700/50 rounded-lg h-[70vh]'>
       <div className='h-full grid grid-cols-3 gap-4 items-center justify-center rounded-lg p-4'>
-       
         <div className='flex flex-col justify-center items-center col-span-3 p-4 rounded-lg border-2 border-gray-900/80 bg-gray-900/60'>
-         {isLoading && <Spinner />}
+          {isLoading && <Spinner />}
           <h1 className='text-4xl font-bold'>{profile.userId?.fullName}</h1>
           <h1 className='text-sm text-gray-500'>{profile.userId?.email}</h1>
         </div>
         <div className='h-[30vh] col-span-2  p-4 bg-gray-900/60 rounded-lg border-2 border-gray-900/80 '>
-         {isLoading && <Spinner />}
+          {isLoading && <Spinner />}
           <p>
             <b>Organization</b>: {profile.organizationName}
           </p>
@@ -74,7 +94,7 @@ function CandidateFeed() {
           </p>
         </div>
         <div className='col-span-3  p-4 border-2 rounded-lg border-gray-900/80 bg-gray-900/60'>
-         {isLoading && <Spinner />}
+          {isLoading && <Spinner />}
           <ul className='flex flex-row gap-2 items-center '>
             Skills:{" "}
             {profile.skills?.map((skill, index) => (

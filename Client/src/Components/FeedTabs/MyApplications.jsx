@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import JobCard from "../../Components/JobCard";
 import Spinner from "../../Components/Spinner";
 
@@ -14,13 +14,16 @@ function MyApplications() {
           token: localStorage.getItem("token"),
         },
       });
-      setIsLoading(false);
       setApplications(res.data.appliedJobs);
+      setIsLoading(false);
     } catch (e) {
       console.log(e);
+      setIsLoading(false);
     }
   }
-  fetchMyApplications();
+  useEffect(() => {
+    fetchMyApplications();
+  }, []);
 
   return (
     <>

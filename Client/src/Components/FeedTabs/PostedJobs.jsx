@@ -26,7 +26,7 @@ function PostedJobs() {
       {jobs.length != 0 ? (
         <div className='grid grid-cols-2 gap-4'>
           {jobs.map((job) => (
-            <JobCard key={job._id} job={job} tab={"Jobs"} />
+            <JobCard key={job._id} job={job} tab={"emp"} onDelete={fetchJobs} />
           ))}
         </div>
       ) : (
