@@ -18,7 +18,7 @@ function EmployerFeed() {
         setProfile(res.data.profile);
         setIsLoading(false);
       } catch (err) {
-        console.log(err);
+        console.log("Error", err);
       }
     }
     async function fetchApplications() {
@@ -28,11 +28,11 @@ function EmployerFeed() {
             token: localStorage.getItem("token"),
           },
         });
-        console.log(response.data);
+        
         setReceivedApplicationCount(response.data.applicationsReceived.length);
         setIsLoading(false);
       } catch (error) {
-        console.error("Error fetching applications: from frontend", error);
+        console.error("Error", error);
       }
     }
 

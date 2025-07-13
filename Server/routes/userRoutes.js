@@ -82,7 +82,6 @@ router.get("/me", auth, async function (req, res) {
       });
     }
   } catch (error) {
-    console.error("Error in /me:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 });
@@ -201,7 +200,6 @@ router.get("/allusers", auth, async (req, res) => {
     const allusers = await UserModel.find({}, "-password -__v"); // exclude sensitive fields
     return res.status(200).json({ allusers });
   } catch (error) {
-    console.error("Error fetching users:", error);
     return res.status(500).json({ message: "Failed to fetch users" });
   }
 });
@@ -219,7 +217,6 @@ router.post("/apply-job", auth, onlyCandidate, async function (req, res) {
       .status(200)
       .json({ message: "Application submitted successfully" });
   } catch (e) {
-    console.log(e);
     return res.status(500).json({ error: "error submitting application " });
   }
 });
@@ -293,7 +290,7 @@ router.get(
         applicationsReceived: applicationsReceived,
       });
     } catch (e) {
-      console.log("Can not fetch application received from backend", e);
+      return res.json({message: e});
     }
   }
 );

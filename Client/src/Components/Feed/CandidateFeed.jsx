@@ -7,38 +7,6 @@ function CandidateFeed() {
   const [isLoading, setIsLoading] = useState(true);
   const [applicationCount, setApplicationCount] = useState(0);
 
-  // useEffect(() => {
-  //   async function fetchCandidateProfile() {
-  //     try {
-  //       const res = await axios.get("/api/me", {
-  //         headers: {
-  //           token: localStorage.getItem("token"),
-  //         },
-  //       });
-  //       setProfile(res.data.profile);
-  //       setIsLoading(false);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  //   fetchCandidateProfile();
-  // }, []);
-
-  // async function fetchMyApplications() {
-  //   try {
-  //     const res = await axios.get("/api/my-applications", {
-  //       headers: {
-  //         token: localStorage.getItem("token"),
-  //       },
-  //     });
-  //     setIsLoading(false);
-  //     setApplicationCount(res.data.appliedJobs.length);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
-  // fetchMyApplications();
-  
   useEffect(() => {
     async function fetchAllData() {
       try {

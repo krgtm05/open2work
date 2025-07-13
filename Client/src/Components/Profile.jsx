@@ -25,7 +25,7 @@ function Profile() {
       return;
     }
     try {
-      const res = await axios.post(
+      await axios.post(
         "/api/profile",
         {
           companyName: companyName,
@@ -42,8 +42,6 @@ function Profile() {
         }
       );
       alert("Profile updated successfully");
-      console.log(res.data);
-      // On success, navigate to complete-profile page
       navigate("/login");
     } catch (error) {
       alert("Profile update failed");
@@ -56,7 +54,7 @@ function Profile() {
       return;
     }
     try {
-      const res = await axios.post(
+      await axios.post(
         "/api/profile",
         {
           organizationName: organizationName,
@@ -71,8 +69,6 @@ function Profile() {
           },
         }
       );
-
-      console.log(res.data);
       alert("Profile updated successfully");
       navigate("/login");
     } catch (e) {
