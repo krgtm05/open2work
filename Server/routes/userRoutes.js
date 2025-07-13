@@ -270,4 +270,32 @@ router.delete(
   }
 );
 
+router.get(
+  "/application-received",
+  auth,
+  onlyEmployer,
+  async function (req, res) {
+    try {
+      const employer = await EmployerProfileModel.findOne({
+        userId: req.user._id,
+      });
+      const JobsByMe = await JobModel.find({ employerId: employer._id });
+      const jobsByMeIds = JobsByMe.map((job) => job._id);
+
+      const applicationsReceived = await ApplicationSchemaModel.find({
+        jobId: { $in: jobsByMeIds },
+      })
+        .populate("jobId", "title salary")
+        .populate("userId", "fullName email");
+      
+      return res.status(200).json({
+        message: "applications received provided",
+        applicationsReceived: applicationsReceived,
+      });
+    } catch (e) {
+      console.log("Can not fetch application received from backend", e);
+    }
+  }
+);
+
 module.exports = router;

@@ -5,7 +5,7 @@ import Spinner from "../Spinner";
 function EmployerFeed() {
   const [profile, setProfile] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  // const [applicationCount, setApplicationCount] = useState(0);
+  const [receivedApplicationCount, setReceivedApplicationCount] = useState(0);
 
   useEffect(() => {
     async function fetchCandidateProfile() {
@@ -21,6 +21,22 @@ function EmployerFeed() {
         console.log(err);
       }
     }
+    async function fetchApplications() {
+      try {
+        const response = await axios.get("/api/application-received", {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        });
+        console.log(response.data);
+        setReceivedApplicationCount(response.data.applicationsReceived.length);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching applications: from frontend", error);
+      }
+    }
+
+    fetchApplications();
     fetchCandidateProfile();
   }, []);
   return (
@@ -49,7 +65,7 @@ function EmployerFeed() {
         <div className='h-[30vh] col-span-1 flex flex-col justify-between items-center  rounded-lg border-2 border-primary-400  '>
           <div className='h-[90%] flex flex-col items-center justify-center '>
             {isLoading && <Spinner />}
-            <h1 className='text-9xl font-bold'>{0}</h1>
+            <h1 className='text-9xl font-bold'>{receivedApplicationCount}</h1>
           </div>
           <p className='bg-green-400 w-full text-center p-2 rounded-b text-gray-900 '>
             {" "}
@@ -57,7 +73,7 @@ function EmployerFeed() {
           </p>
         </div>
         <div className='col-span-3 text-center  p-4 border-2 rounded-lg border-gray-900/80 bg-gray-900/60'>
-          Notifications: Latest notifications will appear here
+          Notifications: Latest notifications will appear here!
         </div>
       </div>
     </div>
