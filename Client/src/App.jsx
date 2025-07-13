@@ -4,6 +4,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { useState } from "react";
 import RoleSelection from "./Components/RoleSelection/RoleSelection";
 import SignUp from "./Components/Signup/SignUp";
 import Login from "./Components/Login/Login";
@@ -20,10 +21,8 @@ import MyApplications from "./Components/FeedTabs/MyApplications";
 import AllJobs from "./Components/FeedTabs/AllJobs";
 import Profile from "./Components/Profile";
 
-
-const role = localStorage.getItem("role");
-
 function App() {
+   const [role, setRole] = useState(() => localStorage.getItem("role"));
   return (
     <>
       <Router>
@@ -45,7 +44,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path='/login' element={<Login />} />
+          <Route path='/login' element={<Login setRole={setRole} />} />
           <Route
             path='/feed'
             element={

@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
-export default function Login() {
+export default function Login({ setRole }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -21,10 +21,9 @@ export default function Login() {
         },
       });
 
-      // Store role and any other user info
-      console.log("Profile Response:", profileRes.data);
       console.log(profileRes.data.profile.userId.role);
       localStorage.setItem("role", profileRes.data.profile.userId.role);
+      setRole(profileRes.data.profile.userId.role);
       navigate("/feed");
     } catch {
       alert("User Not Found or Invalid Credentials");
