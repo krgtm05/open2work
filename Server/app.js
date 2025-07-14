@@ -11,7 +11,7 @@ mongoose.connect(process.env.MONGO_URI);
 const app = express();
 app.use(
   cors({
-    origin: "https://open2work-tau.vercel.app/", // replace with your frontend URL
+    origin: ["https://open2work-tau.vercel.app","http://localhost:5173"], // replace with your frontend URL
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true, // if you need to send cookies or auth headers
   })
